@@ -1,4 +1,5 @@
-const pkg = require('./package')
+const pkg = require('./package');
+require('dotenv').config();
 
 module.exports = {
   mode: 'spa',
@@ -66,16 +67,43 @@ module.exports = {
    ** Nuxt.js modules
    */
   modules: [
-    // Doc: https://github.com/nuxt-community/axios-module#usage
+    'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
-    // Doc: https://bootstrap-vue.js.org/docs/
-    'bootstrap-vue/nuxt'
+    '@nuxtjs/auth',
+    '@nuxtjs/toast',
   ],
   /*
    ** Axios module configuration
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+    baseURL: process.env.API_URL || 'http://localhost:8080',
+    progress: true,
+  },
+
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/login', method: 'post', propertyName: 'token' },
+          logout: false,
+          user: false,
+        },
+        tokenRequired: true,
+        tokenType: 'Bearer'
+      },
+    },
+    redirect: {
+      login: '/login',
+      logout: '/',
+      home: '/register',
+      callback:'/login'
+    },
+  },
+
+  toast: {
+    position: 'top-right',
+    duration: 2000
   },
 
   /*
@@ -87,6 +115,11 @@ module.exports = {
      */
     extend(config, ctx) {
 
-    }
+    },
+  },
+
+  env: {
+    apiUrl: process.env.API_URL || 'http://localhost:8080',
+    apiToken: process.env.API_TOKEN,
   }
 }
