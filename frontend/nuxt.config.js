@@ -8,7 +8,7 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    title: pkg.name,
+    title: 'School4Home',
     meta: [{
         charset: 'utf-8'
       },
@@ -69,7 +69,6 @@ module.exports = {
   modules: [
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
-    '@nuxtjs/auth',
     '@nuxtjs/toast',
   ],
   /*
@@ -77,28 +76,8 @@ module.exports = {
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: process.env.API_URL || 'http://localhost:8080',
+    baseURL: process.env.API_URL || 'http://localhost:3000',
     progress: true,
-  },
-
-  auth: {
-    strategies: {
-      local: {
-        endpoints: {
-          login: { url: '/login', method: 'post', propertyName: 'token' },
-          logout: false,
-          user: false,
-        },
-        tokenRequired: true,
-        tokenType: 'Bearer'
-      },
-    },
-    redirect: {
-      login: '/login',
-      logout: '/',
-      home: '/register',
-      callback:'/login'
-    },
   },
 
   toast: {

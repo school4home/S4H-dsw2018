@@ -1,7 +1,7 @@
 {
-  "name": "frontend",
+  "name": "school4home",
   "version": "1.0.0",
-  "description": "My remarkable Nuxt.js project",
+  "description": "An application to give help and support to Home Schooling.",
   "author": "Victor da Silva Fonseca Leite",
   "private": true,
   "scripts": {
@@ -11,7 +11,6 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nuxtjs/auth": "^4.5.2",
     "@nuxtjs/axios": "^5.0.0",
     "@nuxtjs/dotenv": "^1.1.1",
     "@nuxtjs/toast": "^3.0.1",

@@ -3,10 +3,10 @@
     <div>
       <logo/>
       <h1 class="title">
-        frontend
+        School4Home
       </h1>
       <h2 class="subtitle">
-        My remarkable Nuxt.js project
+        An application to give help and support to Home Schooling.
       </h2>
       <div class="links">
         <a
