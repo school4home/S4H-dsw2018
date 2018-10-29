@@ -20,8 +20,8 @@
 <script>
 import { mapActions } from 'vuex';
 
-import nav from './menu'
-import { Header as AppHeader, Sidebar, Aside as AppAside, Footer as AppFooter, Breadcrumb } from '~/components/'
+import menu from './menu'
+import { Header as AppHeader, Sidebar, Aside as AppAside, Footer as AppFooter, Breadcrumb } from '~/components/theme'
 
 export default {
     components: {
@@ -34,7 +34,7 @@ export default {
 
     data() {
         return {
-            nav: nav.items,
+            nav: menu,
         };
     },
 
