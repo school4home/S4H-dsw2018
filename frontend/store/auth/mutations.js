@@ -8,4 +8,10 @@ export default {
     setLoggedInUser(state, user) {
         state.loggedInUser = user;
     },
+
+    logoutUser(state) {
+        state.loggedInUser = {};
+        state.auth = '';
+        Cookie.remove('auth');
+    },
 };

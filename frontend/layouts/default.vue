@@ -5,12 +5,10 @@
         <div class="app-body">
             <Sidebar :navItems="nav"/>
             <main class="main">
-                <breadcrumb :list="list"/>
                 <div class="container-fluid">
                     <nuxt />
                 </div>
             </main>
-            <AppAside/>
         </div>
 
         <AppFooter/>
@@ -21,15 +19,13 @@
 import { mapActions } from 'vuex';
 
 import menu from './menu'
-import { Header as AppHeader, Sidebar, Aside as AppAside, Footer as AppFooter, Breadcrumb } from '~/components/theme'
+import { Header as AppHeader, Sidebar, Footer as AppFooter } from '~/components/theme'
 
 export default {
     components: {
         AppHeader,
         Sidebar,
-        AppAside,
         AppFooter,
-        Breadcrumb,
     },
 
     data() {

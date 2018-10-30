@@ -34,4 +34,10 @@ export default {
                 .catch(err => reject(err));
         });
     },
+
+    async logout({ commit }) {
+        let { data } = await this.$axios.get('/auth/logout');
+
+        return data;
+    }
 };
