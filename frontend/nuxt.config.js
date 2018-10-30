@@ -4,6 +4,10 @@ require('dotenv').config();
 module.exports = {
   mode: 'spa',
 
+  router: {
+    middleware: 'auth',
+  },
+
   /*
    ** Headers of the page
    */

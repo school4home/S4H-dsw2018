@@ -11,7 +11,7 @@
                 <b-input-group-prepend>
                   <b-input-group-text><i class="icon-user"></i></b-input-group-text>
                 </b-input-group-prepend>
-                <input type="text" class="form-control" placeholder="Username" v-model="form.username">
+                <input type="text" class="form-control" placeholder="Name" v-model="form.name">
               </b-input-group>
 
               <b-input-group class="mb-3">
@@ -32,7 +32,7 @@
                 <b-input-group-prepend>
                   <b-input-group-text><i class="icon-lock"></i></b-input-group-text>
                 </b-input-group-prepend>
-                <input type="password" class="form-control" :class="confirmed ? '' : 'is-invalid'" placeholder="Repeat password" v-model="passwordConfirmation">
+                <input type="password" class="form-control" :class="confirmed ? '' : 'is-invalid'" placeholder="Confirm password" v-model="form.password_confirmation">
                 <div class="invalid-feedback">
                     Password confirmation doesn't match.
                 </div>
@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import { mapActions, mapMutations } from 'vuex';
+
 export default {
     name: 'Register',
     layout: 'clean',
@@ -55,21 +57,21 @@ export default {
     data() {
         return {
             form: {
-                username: '',
+                name: '',
                 email: '',
                 password: '',
+                password_confirmation: '',
             },
-            passwordConfirmation: '',
         };
     },
 
     computed: {
         confirmed() {
-            return this.passwordConfirmation === this.form.password ? true : false;
+            return this.form.password_confirmation === this.form.password ? true : false;
         },
 
         emptyFields() {
-            if (!this.form.username || !this.form.email || !this.form.password || !this.confirmed) {
+            if (!this.form.name || !this.form.email || !this.form.password || !this.confirmed) {
                 return true;
             }
 
@@ -78,12 +80,17 @@ export default {
     },
 
     methods: {
+        ...mapActions({
+            registerUser: 'auth/register',
+            loginUser: 'auth/login',
+        }),
+
         register() {
-            return this.$axios.post('/users/sign-up', this.form)
-                .then(res => {
-                    console.log('response', res);
-                    this.$router.replace('/login');
+            this.registerUser(this.form).then((user) => {
+                this.loginUser({email: user.email, password: this.form.password}).then(() => {
+                    this.$router.push('/');
                 });
+            });
         },
     },
 }

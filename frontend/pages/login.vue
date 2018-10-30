@@ -12,9 +12,8 @@
 
                 <b-input-group class="mb-3">
                   <b-input-group-prepend><b-input-group-text><i class="icon-user"></i></b-input-group-text></b-input-group-prepend>
-                  <input type="text" class="form-control" placeholder="Username" v-model="form.username">
+                  <input type="text" class="form-control" placeholder="Email" v-model="form.email">
                 </b-input-group>
-
                 <b-input-group class="mb-4">
                   <b-input-group-prepend><b-input-group-text><i class="icon-lock"></i></b-input-group-text></b-input-group-prepend>
                   <input type="password" class="form-control" placeholder="Password" v-model="form.password">
@@ -22,7 +21,7 @@
 
                 <b-row>
                   <b-col cols="6">
-                    <b-button variant="primary" class="px-4" @click="login">Login</b-button>
+                    <b-button variant="primary" class="px-4" @click="login" :disabled=!disableLogin>Login</b-button>
                   </b-col>
 
                   <b-col cols="6" class="text-right">
@@ -36,7 +35,7 @@
               <b-card-body class="text-center">
                 <div>
                   <h2>Sign up</h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                  <p>Create your own account to enjoy all the benefits from School4Home!</p>
                   <b-button variant="primary" class="active mt-3" @click="$router.push('/register')">Register Now!</b-button>
                 </div>
               </b-card-body>
@@ -49,63 +48,35 @@
 </template>
 
 <script>
-const Cookie = process.client ? require('js-cookie') : undefined;
+import { mapActions } from 'vuex';
 
 export default {
-    name: 'Login',
     layout: 'clean',
-    // middleware: 'notAuthenticated',
 
     data() {
         return {
             form: {
-                username: '',
+                email: '',
                 password: '',
             },
         };
     },
 
-    created() {
-        //
+    computed: {
+        disableLogin() {
+            return !!this.form.email && !!this.form.password;
+        },
     },
 
     methods: {
+        ...mapActions({
+            loginUser: 'auth/login',
+        }),
+
         login() {
-            return this.$axios.post('/login', this.form)
-                .then(res => {
-                    console.log('response', res);
-                    // Cookie.set('auth', res);
-                    this.$router.push('/');
-                });
-        },
-        // async login() {
-        //     try {
-        //         this.$toast.show('Logging in...', { icon: "fingerprint" });
-                
-        //         await this.$auth.loginWith('local', {
-        //             data: {
-        //                 "username": this.form.username,
-        //                 "password": this.form.password
-        //             }
-        //         }).catch(e => {
-        //             this.$toast.error('Failed logging in', { icon: "error_outline" });
-        //         });
-                
-        //         if (this.$auth.loggedIn) {
-        //             this.$toast.success('Successfully logged in', { icon: "done" });
-        //         }
-        //     } catch (e) {        
-        //         this.$toast.error('Wrong username or password', { icon: "error" });
-        //     }
-        // },
-
-        check(){
-            console.log(this.$auth.loggedIn)
-        },
-
-        logout() {
-            // this.$toast.show('Logging out...', {icon: "fingerprint"});
-            // this.$auth.logout()
+            this.loginUser(this.form).then(res => {
+                this.$router.push('/');
+            });
         },
     },
 };

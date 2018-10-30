@@ -1,45 +1,57 @@
 <template>
-  <div class="app">
-    <AppHeader/>
-    <div class="app-body">
-      <Sidebar :navItems="nav"/>
-      <main class="main">
-        <breadcrumb :list="list"/>
-        <div class="container-fluid">
-          <nuxt />
+    <div class="app">
+        <AppHeader/>
+
+        <div class="app-body">
+            <Sidebar :navItems="nav"/>
+            <main class="main">
+                <div class="container-fluid">
+                    <nuxt />
+                </div>
+            </main>
         </div>
-      </main>
-      <AppAside/>
+
+        <AppFooter/>
     </div>
-    <AppFooter/>
-  </div>
 </template>
 
 <script>
-import nav from './menu'
-import { Header as AppHeader, Sidebar, Aside as AppAside, Footer as AppFooter, Breadcrumb } from '~/components/'
+import { mapActions } from 'vuex';
+
+import menu from './menu'
+import { Header as AppHeader, Sidebar, Footer as AppFooter } from '~/components/theme'
 
 export default {
-  name: 'full',
-  components: {
-    AppHeader,
-    Sidebar,
-    AppAside,
-    AppFooter,
-    Breadcrumb
-  },
-  data () {
-    return {
-      nav: nav.items
-    }
-  },
-  computed: {
-    name () {
-      return this.$route.name
+    components: {
+        AppHeader,
+        Sidebar,
+        AppFooter,
     },
-    list () {
-      return this.$route.matched
-    }
-  }
-}
+
+    data() {
+        return {
+            nav: menu,
+        };
+    },
+
+    computed: {
+        name() {
+            return this.$route.name;
+        },
+
+        list() {
+            return this.$route.matched;
+        },
+    },
+
+    created() {
+        this.authenticateUser();
+    },
+
+    methods: {
+        ...mapActions({
+            authenticateUser: 'auth/authenticate', 
+        }),
+    },
+};
 </script>
