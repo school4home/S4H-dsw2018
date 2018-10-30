@@ -1,10 +1,22 @@
 import Cookie from 'js-cookie';
 
 export default {
+    register({dispatch}, form) {
+        return new Promise((resolve, reject) => {
+            this.$axios
+                .$post('/auth/register', form)
+                .then(res => resolve(res.data))
+                .catch(err => reject(err));
+        });
+
+
+        return data;
+    },
+
     login({ dispatch, commit }, user) {
         return new Promise((resolve, reject) => {
             this.$axios
-                .$post('auth/login', user)
+                .$post('/auth/login', user)
                 .then(res => {
                     Cookie.set('auth', res.access_token, { expires: 7 });
 
