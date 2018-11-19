@@ -35,3 +35,18 @@ class LoginView(FormView):
 
     def get(self, request, *args, **kwargs):
         return redirect('index')
+
+def logout_user(request):
+    if hasattr(request, 'user') and isinstance(request.user, User):
+        logout(request)
+        messages.success(request, 'Voce foi deslogado com sucesso!')
+    return redirect('index')
+
+
+def delete_user(request):
+    if request.user.is_authenticated():
+        request.user.delete()
+        logout(request)
+        return index(request)
+    else:
+        return index(request)
