@@ -4,6 +4,7 @@ from .models import GRADE
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from django.core.exceptions import ValidationError
 
 class S4HUserForm(forms.Form):
     name = forms.CharField(
@@ -18,6 +19,11 @@ class S4HUserForm(forms.Form):
         label='Email:',
         required=True,
         widget=forms.TextInput(attrs={'placeholder': ''})
+    )
+    password = forms.CharField(
+        label='Senha:',
+        required=True,
+        widget=forms.PasswordInput(attrs={'placeholder': ''})
     )
 
 class PasswordForm(S4HUserForm):
@@ -115,7 +121,7 @@ class UserForm(S4HUserForm):
         if hasattr(self,"instance") and self.instance.user.email == email:
             return email
         elif User.objects.filter(email=email).exists():
-                raise ValidationError('Email already used.')
+                raise ValidationError('Email ja utilizado.')
 
         return email
 
@@ -124,15 +130,13 @@ class UserForm(S4HUserForm):
         name = self.cleaned_data['name']
 
         if (len(name) < 2 or len(name) > 50):
-            raise ValidationError(['Name must be between 2 and \
-                                               50 characters.', ])
+            raise ValidationError(['Nome deve ter entre 2 e 50 caracteres', ])
 
         if validation.hasSpecialCharacters(name):
-            raise ValidationError(['Name cannot contain special \
-                                               characters.', ])
+            raise ValidationError(['Nome não pode conter caracteres especiais', ])
 
         if validation.hasNumbers(name):
-            raise ValidationError(['Name cannot contain numbers.', ])
+            raise ValidationError(['Nome não pode conter números', ])
         return name
 
     def clean(self):
@@ -143,11 +147,29 @@ class UserForm(S4HUserForm):
             password2 = cleaned_data['repeat_password']
 
             if len(password1) < 6 or len(password1) > 15:
-                raise ValidationError({'password': ['Password must be \
-                                                       between 6 and 15 \
-                                                       characters.', ]})
+                raise ValidationError({'password': ['Senha deve conter entre 6 e 15 caracteres', ]})
 
             if password1 and password2 and password1 != password2:
-                raise ValidationError({'repeat_password': ['Passwords do \
-                                                              not match.', ]})
+                raise ValidationError({'repeat_password': ['Senhas são diferentes', ]})
+        return cleaned_data
+
+class LoginForm(S4HUserForm):
+
+    def __init__(self, *args, **kwargs):
+        super(LoginForm, self ).__init__(*args, **kwargs)
+        self.fields.pop("name")
+        self.fields.pop("grade")
+
+    def authenticate_user(self):
+        username = self.cleaned_data.get("email")
+        password = self.cleaned_data.get("password")
+        user = authenticate(username=username, password=password)
+        if user is None:
+            raise ValidationError({'password':
+                                  [('Email ou senha incorretos'), ]})
+        return user
+
+    def clean(self):
+        cleaned_data = super(LoginForm, self).clean()
+        self.authenticate_user()
         return cleaned_data
