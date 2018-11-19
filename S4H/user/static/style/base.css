@@ -168,7 +168,7 @@ hr.star-light {
 }
 
 hr.star-light:after {
-    content: "\f005";
+    content: "\f007";
     font-family: FontAwesome;
     display: inline-block;
     position: relative;
