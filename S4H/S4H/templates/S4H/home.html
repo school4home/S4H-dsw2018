@@ -1,0 +1,18 @@
+{% extends 'S4H/base.html' %}
+{% load i18n %}
+
+{% load bootstrap3 %}
+{% bootstrap_messages %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="intro-text">
+            <h2>Bem-vindo!, {{ user.s4h_user.full_name }}</h2>
+            <span class="name">School 4 Home</span>
+            <hr class="star-light">
+            <span class="skills">Sistema de educação a distância a fim de auxiliar <br> o estudo em casa.</span>
+        </div>
+    </div>
+</div>
+{% endblock %}
