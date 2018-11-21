@@ -65,3 +65,19 @@ class VideoQuestion(Material):
 
     def displayMaterial(self):
         return self.video
+
+
+class ImageQuestion(Material):
+    """
+    Represent leaf objects in the composition. A leaf has no children.
+    Define behavior for primitive objects in the composition.
+    """
+    name = models.CharField(max_length=50, null=False)
+    start_date = models.DateField()
+    close_date = models.DateField()
+    description = models.CharField(max_length=500, null=False)
+    photo = models.ImageField(upload_to='photoQuestion')
+
+    def displayMaterial(self):
+        return self.photo
+
