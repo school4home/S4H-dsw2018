@@ -44,12 +44,11 @@ class TextQuestion(Material):
     """
     name = models.CharField(max_length=50, null=False)
     start_date = models.DateField()
-    close_date = models.DateField()
     description = models.CharField(max_length=500, null=False)
-    text = models.TextField(blank=True, null=True)
+    text_question = models.TextField(blank=True, null=True)
 
     def displayMaterial(self):
-        return self.text
+        return self.text_question
 
 
 class VideoQuestion(Material):
