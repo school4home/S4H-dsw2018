@@ -10,6 +10,7 @@ class Material(PolymorphicModel):
     def displayMaterial(self):
         pass
 
+
 class Exercise(Material):
     """
     Define behavior for components having children.
@@ -34,3 +35,18 @@ class Exercise(Material):
 
     def remove(self, material):
         self._list_of_material.remove(material)
+
+
+class TextQuestion(Material):
+    """
+    Represent leaf objects in the composition. A leaf has no children.
+    Define behavior for primitive objects in the composition.
+    """
+    name = models.CharField(max_length=50, null=False)
+    start_date = models.DateField()
+    close_date = models.DateField()
+    description = models.CharField(max_length=500, null=False)
+    text = models.TextField(blank=True, null=True)
+
+    def displayMaterial(self):
+        return self.text
