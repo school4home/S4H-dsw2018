@@ -50,3 +50,18 @@ class TextQuestion(Material):
 
     def displayMaterial(self):
         return self.text
+
+
+class VideoQuestion(Material):
+    """
+    Represent leaf objects in the composition. A leaf has no children.
+    Define behavior for primitive objects in the composition.
+    """
+    name = models.CharField(max_length=50, null=False)
+    start_date = models.DateField()
+    close_date = models.DateField()
+    description = models.CharField(max_length=500, null=False)
+    video = models.TextField(blank=True, null=True)
+
+    def displayMaterial(self):
+        return self.video
