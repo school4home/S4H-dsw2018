@@ -16,8 +16,14 @@
              <li><a href="{% url 'index' %}">Início</a></li>
              <li><a href="{% url 'user:newuser' %}">Algo</a></li>
              {% if request.user.is_authenticated %}
+             <!-- <li>              
+                <a href="{% url 'create_question_text' %}">Criar Questões</a>
+             </li>-->
              <li><a href="{% url 'user:newuser' %}">Algo</a></li>
              {% endif %}
+             <li>              
+                <a href="{% url 'create_question_text' %}">Criar Questões</a>
+             </li>
              <li><a href="{% url 'user:newuser' %}">Algo</a></li>
          </ul>
          {% if request.user.is_authenticated %}
@@ -29,9 +35,6 @@
                      <span class="caret"></span>
                  </a>
                  <ul class="dropdown-menu pull-right" aria-labelledby="user-link">
-                    <li class="nav-item">              
-                            <a class="nav-link" href="{% url 'create_question_text' %}">Criar Questões</a>
-                    </li>
                      <li class="user-menu-info"><a href="{% url 'user:newuser' %}">
                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                       Algo</a></li>
