@@ -9,5 +9,5 @@ urlpatterns = [
     url(r'^list_question_text/', views.list_question_text, name='list_question_text'),
     url(r'^edit_question_text/(?P<id>\d+)/$', views.edit_question_text, name='edit_question_text'),
     url(r'^delete_question_text/(?P<id>\d+)/$', views.delete_question_text, name='delete_question_text'),
-
+    url(r'^new_exam/', views.NewExamView.as_view(), name='new_exam')
 ]
