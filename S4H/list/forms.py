@@ -1,8 +1,12 @@
 from .models import TextQuestion
 from django.forms import ModelForm
+from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
-        
+from .models import Exam, ExamQuestion
+from school.models import SchoolYear
+
+REPETITIONS = 3
 
 class QuestionTextForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -24,3 +28,52 @@ class QuestionTextForm(ModelForm):
             'description': 'Descrição',
             'text_question': 'Questão'
         }
+
+class ExamForm(forms.Form):
+
+    application_date = forms.DateField(
+        label='Data da Prova:',
+        required=True,
+        widget=forms.SelectDateWidget()
+    )
+    school_year = forms.DecimalField(
+        label='Série',
+        required=True,
+        widget=forms.NumberInput()
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(ExamForm, self).__init__(*args, **kwargs)
+        for count in range(REPETITIONS):
+            self.fields['question_%d' % count] = forms.CharField(
+            label=('Questão %d:' % count),
+            required=True,
+            widget=forms.Textarea
+            )
+
+    def set_exam(self, exam):
+        exam.application_date = self.cleaned_data.get('application_date')
+        exam.school_year = SchoolYear.get_instance(self.cleaned_data.get('school_year'))
+        return exam
+
+    def set_questions(self, exam):
+        questions = []
+        for count in range(REPETITIONS):
+            questions.append(ExamQuestion())
+            questions[count].question_text = self.cleaned_data.get('question_%d' % count)
+            questions[count].exam = exam
+        return questions
+
+    def insert(self):
+        exam = Exam()
+        exam = self.set_exam(exam)
+        questions = self.set_questions(exam)
+        try:
+            exam.save()
+            for question in questions:
+                question.save()
+        except Exception as e:
+            print(e)
+
+    def clean(self):
+        self.cleaned_data = super(ExamForm, self).clean()
