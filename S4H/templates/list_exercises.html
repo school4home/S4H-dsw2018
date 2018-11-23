@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content%}
+
+<table class="table table-striped">
+  <br><br>
+  <a href="{% url 'create_exercise' %}" class="btn btn-success btn-block" role="button">Criar + Exercicios</a>
+
+    <thead>
+      <tr>
+        <th>Autor</th>
+        <th>Descrição</th>
+        <th>Questão</th>
+        <th>?????</th>
+      </tr>
+    </thead>
+    <tbody>
+	
+	<tr>
+            <td>{{exercises.name}}</td>
+           <td>{{exercises.description}}</td> 
+           <td>{{exercises.question.id}}</td>
+           <td>{{exercise}}</td>
+	    <td><a href="#" class="glyphicon glyphicon-pencil">Editar</a></td>
+	    <td><a href="#" class="glyphicon glyphicon-trash">Remover</a></td>
+	</tr>
+
+    </tbody>
+  </table>
+
+    <h1>{{question_text}}</h1>
+
+{% endblock content %}
