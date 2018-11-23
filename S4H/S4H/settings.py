@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'user',
     'S4H',
     'list',
+    'school',
     'bootstrap3',
     'rest_framework',
     'polymorphic',

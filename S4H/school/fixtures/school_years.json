@@ -1,0 +1,65 @@
+[
+  {
+    "model": "school.schoolyear",
+    "pk": 1,
+    "fields": {
+      "year": "1"
+    }
+  },
+  {
+    "model": "school.schoolyear",
+    "pk": 2,
+    "fields": {
+      "year": "2"
+    }
+  },
+  {
+    "model": "school.schoolyear",
+    "pk": 3,
+    "fields": {
+      "year": "3"
+    }
+  },
+  {
+    "model": "school.schoolyear",
+    "pk": 4,
+    "fields": {
+      "year": "4"
+    }
+  },
+  {
+    "model": "school.schoolyear",
+    "pk": 5,
+    "fields": {
+      "year": "5"
+    }
+  },
+  {
+    "model": "school.schoolyear",
+    "pk": 6,
+    "fields": {
+      "year": "6"
+    }
+  },
+  {
+    "model": "school.schoolyear",
+    "pk": 7,
+    "fields": {
+      "year": "7"
+    }
+  },
+  {
+    "model": "school.schoolyear",
+    "pk": 8,
+    "fields": {
+      "year": "8"
+    }
+  },
+  {
+    "model": "school.schoolyear",
+    "pk": 9,
+    "fields": {
+      "year": "9"
+    }
+  }
+]

@@ -4,6 +4,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.core.exceptions import ValidationError
+from school.models import SchoolYear
 
 class S4HUserForm(forms.Form):
     name = forms.CharField(
@@ -86,7 +87,9 @@ class UserForm(S4HUserForm):
         s4h_user.name(self.cleaned_data.get('name'))
         s4h_user.user.email = self.cleaned_data.get('email')
         s4h_user.user.username = s4h_user.user.email
-        s4h_user.school_year = self.cleaned_data.get('school_year')
+        year = self.cleaned_data.get('school_year')
+        school_year = SchoolYear.get_instance(year)
+        s4h_user.school_year = school_year
 
     def update(self, s4h_user):
         self.set_fields(s4h_user)
