@@ -19,8 +19,8 @@ class QuestionTextForm(ModelForm):
         model = TextQuestion
         fields = '__all__'
         labels = {
-            'name': 'nome',
-            'start_date': 'Data da Elaboracao da Questao',
+            'name': 'Autor',
+      #      'start_date': 'Data da Elaboracao da Questao',
             'description': 'Descrição',
             'text_question': 'Questão'
         }
