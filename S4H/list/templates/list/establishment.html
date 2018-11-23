@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'S4H/base.html' %}
 {% load crispy_forms_tags %}
 
 {% block content%}
@@ -11,8 +11,9 @@
       </div>
       <div class="col-6" style="margin-top:50px; ">
 	<div  style="background:#DCDCDC; border-radius: 25px ">
+
 	  <div style="margin:30px ">
-      <h1>{{title}}</h1>
+	    <h1>{{title}}</h1>
 	    <div style="margin:30px ">
 	      {% crispy form %}
 	    </div>

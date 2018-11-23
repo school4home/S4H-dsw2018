@@ -1,0 +1,32 @@
+{% extends 'S4H/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content%}
+
+<table class="table table-striped">
+  <br><br>
+  <a href="{% url 'list:create_question_text' %}" class="btn btn-success btn-block" role="button">Criar + Questões</a>
+
+    <thead>
+      <tr>
+        <th>Autor</th>
+        <th>Descrição</th>
+        <th>Questão</th>
+      </tr>
+    </thead>
+    <tbody>
+	{% for question_text in question_texts %}
+	<tr>
+            <td>{{question_text.name}}</td>
+           <td>{{question_text.description}}</td>
+           <td>{{question_text.text_question}}</td>
+	    <td><a href="{% url 'list:edit_question_text' question_text.id %}" class="glyphicon glyphicon-pencil">Editar</a></td>
+	    <td><a href="{% url 'list:delete_question_text' question_text.id %}" class="glyphicon glyphicon-trash">Remover</a></td>
+	</tr>
+	{% endfor %}
+    </tbody>
+  </table>
+
+    <h1>{{question_text}}</h1>
+
+{% endblock content %}
