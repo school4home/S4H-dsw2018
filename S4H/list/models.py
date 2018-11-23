@@ -27,7 +27,7 @@ class TextQuestion(Material):
     def __str__(self):
         return self.name
 
-    
+
     def displayMaterial(self):
         return self.text_question
 
@@ -130,3 +130,17 @@ class Grade(models.Model):
         self.notify_grade()
         super(Grade, self).save(*args, **kwargs)
 
+class Exam(models.Model):
+    """
+    Represents the exam to be applied
+    """
+    application_date = models.DateField(auto_now=False, auto_now_add=False)
+    school_year = models.ForeignKey('school.schoolyear', on_delete=models.CASCADE)
+
+
+class ExamQuestion(models.Model):
+    """
+    Represents a question for the exam to be applied.
+    """
+    question_text = models.TextField()
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
