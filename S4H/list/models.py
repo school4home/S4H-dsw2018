@@ -31,9 +31,21 @@ class TextQuestion(Material):
     def displayMaterial(self):
         return self.text_question
 
+class Exercise(PolymorphicModel):
+    name = models.CharField(max_length=50, null=False)
+   # start_date = models.DateField()
+    description = models.CharField(max_length=500, null=False)
+    #text_question = models.TextField(blank=True, null=True)
+    #establishment = models.ManyToManyField(Establishment)
+    question = models.ManyToManyField(TextQuestion)
+
+    def __str__(self):
+        return self.name
 
 
-class Exercise(Material):
+
+
+class ExerciseT(Material):
     """
     Define behavior for components having children.
     Store child components.
