@@ -1,6 +1,5 @@
 from django.forms import ModelForm
 from .models import S4HUser, Validation
-from .models import GRADE
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
@@ -11,7 +10,7 @@ class S4HUserForm(forms.Form):
         label='Nome:',
         widget=forms.TextInput(attrs={'placeholder': ''})
     )
-    grade = forms.DecimalField(
+    school_year = forms.DecimalField(
         label='Ano/Serie:',
         widget=forms.NumberInput(attrs={'placeholder': ''})
     )
@@ -39,7 +38,7 @@ class PasswordForm(S4HUserForm):
     def __init__(self, *args, **kwargs):
         super(PasswordForm, self).__init__(*args, **kwargs)
         self.fields.pop('email')
-        self.fields.pop('grade')
+        self.fields.pop('school_year')
         self.fields.pop('name')
 
     def save(self, user):
@@ -87,7 +86,7 @@ class UserForm(S4HUserForm):
         s4h_user.name(self.cleaned_data.get('name'))
         s4h_user.user.email = self.cleaned_data.get('email')
         s4h_user.user.username = s4h_user.user.email
-        s4h_user.grade = self.cleaned_data.get('grade')
+        s4h_user.school_year = self.cleaned_data.get('school_year')
 
     def update(self, s4h_user):
         self.set_fields(s4h_user)
@@ -104,17 +103,19 @@ class UserForm(S4HUserForm):
         self.set_fields(s4h_user)
         s4h_user.user.set_password(self.cleaned_data.get('password'))
         try:
+            print('BYE')
             s4h_user.save()
+            print('HELLO')
         except e:
            raise Exception("Something went wrong so we could not save \
                              your data. Try again later")
         return s4h_user
 
-    def clean_grade(self):
-        grade = self.cleaned_data["grade"]
-        if (grade > 9 or grade < 1):
+    def clean_school_year(self):
+        school_year = self.cleaned_data["school_year"]
+        if (school_year > 9 or school_year < 1):
             raise ValidationError(['Serie deve ser maior que 1 e menor que 9'])
-        return grade
+        return school_year
 
     def clean_email(self):
         email = self.cleaned_data["email"]
@@ -158,7 +159,7 @@ class LoginForm(S4HUserForm):
     def __init__(self, *args, **kwargs):
         super(LoginForm, self ).__init__(*args, **kwargs)
         self.fields.pop("name")
-        self.fields.pop("grade")
+        self.fields.pop("school_year")
 
     def authenticate_user(self):
         username = self.cleaned_data.get("email")

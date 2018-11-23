@@ -1,5 +1,6 @@
 from django.db import models
 from polymorphic.models import PolymorphicModel
+from django.contrib import messages
 
 # Create your models here.
 class Material(PolymorphicModel):
@@ -80,3 +81,44 @@ class ImageQuestion(Material):
     def displayMaterial(self):
         return self.photo
 
+class GradeObserver(models.Model):
+    """
+    Represents the grade observer who watches for a new grade and notifies
+    the specified user
+    """
+    MESSAGE_1 = 'Voce recebeu uma nova nota! O seu valor e '
+    CONGRATS = 'Parabens!'
+    STUDY = 'Vamos revisar!'
+    message = models.CharField(max_length=500, default='')
+    message_type = models.DecimalField(max_digits=5,decimal_places=0,
+        default=messages.SUCCESS,blank=messages.SUCCESS,null=messages.SUCCESS)
+
+    def update(self, grade):
+        grade_value = grade.value
+        if grade_value > 7:
+            new_message = self.MESSAGE_1 + str(grade_value) + '. ' + self.CONGRATS
+            self.message_type = messages.SUCCESS
+        else:
+            new_message = self.MESSAGE_1 + str(grade_value) + '. ' + self.STUDY
+            self.message_type = messages.WARNING
+        self.message = new_message
+        super(GradeObserver, self).save()
+
+    def clear(self):
+        self.message = ''
+        super(GradeObserver, self).save()
+
+class Grade(models.Model):
+    """
+    Represents the grade ie school year in which the student is in.
+    """
+    value = models.DecimalField(max_digits=2, decimal_places=0)
+    student = models.ForeignKey('user.S4HUser', on_delete=models.CASCADE)
+    grade_observer = models.ForeignKey(GradeObserver, on_delete=models.CASCADE)
+
+    def notify_grade(self):
+        self.grade_observer.update(self)
+
+    def save(self, *args, **kwargs):
+        self.notify_grade()
+        super(Grade, self).save(*args, **kwargs)
