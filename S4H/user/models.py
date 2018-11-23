@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from list.models import Grade
 
 GRADE = (('', '----'), ('1', '1'), ('2', '2'),
     ('3', '3'), ('4', '4'), ('5', '5'), ('6', '6'), ('7', '7'), ('8', '8'), ('9', '9'))
@@ -8,7 +9,7 @@ GRADE = (('', '----'), ('1', '1'), ('2', '2'),
 class S4HUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,
             related_name="s4h_user")
-    grade = models.DecimalField(max_digits=1, decimal_places=0)
+    school_year = models.DecimalField(max_digits=1, decimal_places=0)
 
     def create_user(self):
         if not hasattr(self, "user"):
