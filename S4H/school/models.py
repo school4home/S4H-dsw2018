@@ -9,3 +9,11 @@ class SchoolYear(models.Model):
 
     def __str__(self):
         return str(self.year) + ' ano'
+
+class Module(models.Model):
+    name = models.CharField(max_length=200)
+    year = models.ManyToManyField(SchoolYear, related_name='modules')
+
+    @staticmethod
+    def get_instance(module_name, school_year):
+        return Module.objects.get(name=module_name, year=school_year)
