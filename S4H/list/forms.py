@@ -45,8 +45,13 @@ class ExamForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(ExamForm, self).__init__(*args, **kwargs)
         for count in range(REPETITIONS):
-            self.fields['question_%d' % count] = forms.CharField(
-            label=('Questão %d:' % count),
+            self.fields['question_%d' % (count + 1)] = forms.CharField(
+            label=('Questão %d:' % (count + 1)),
+            required=True,
+            widget=forms.Textarea
+            )
+            self.fields['answer_question_%d' % (count + 1)] = forms.CharField(
+            label=('Resposta:'),
             required=True,
             widget=forms.Textarea
             )
@@ -60,7 +65,8 @@ class ExamForm(forms.Form):
         questions = []
         for count in range(REPETITIONS):
             questions.append(ExamQuestion())
-            questions[count].question_text = self.cleaned_data.get('question_%d' % count)
+            questions[count].question_text = self.cleaned_data.get('question_%d' % (count + 1))
+            questions[count].correct_answer = self.cleaned_data.get('answer_question_%d' % (count + 1))
             questions[count].exam = exam
         return questions
 
