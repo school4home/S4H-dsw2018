@@ -18,3 +18,8 @@ S4H/user/__pycache__/
 S4H/user/migrations/
 S4H/S4H/static/images/s4hlogo.jpg
 S4H/S4H/static/images/s4hlogo1.psd
+S4H/__pycache__/
+list/__pycache__/
+list/migrations/
+school/__pycache__/
+school/migrations
