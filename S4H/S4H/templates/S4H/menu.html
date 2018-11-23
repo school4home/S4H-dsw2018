@@ -14,11 +14,14 @@
        <div class="collapse navbar-collapse navbar-ex1-collapse">
          <ul class="nav navbar-nav">
              <li><a href="{% url 'index' %}">Início</a></li>
-             <li><a href="{% url 'user:newuser' %}">Algo</a></li>
+            
              {% if request.user.is_authenticated %}
-             <li><a href="{% url 'user:newuser' %}">Algo</a></li>
+             
              {% endif %}
-             <li><a href="{% url 'user:newuser' %}">Algo</a></li>
+             <li>              
+                <a href="{% url 'create_question_text' %}">Questões</a>
+            </li>
+             
          </ul>
          {% if request.user.is_authenticated %}
          <ul class="nav navbar-nav pull-right">
