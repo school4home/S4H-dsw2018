@@ -143,4 +143,5 @@ class ExamQuestion(models.Model):
     Represents a question for the exam to be applied.
     """
     question_text = models.TextField()
+    correct_answer = models.TextField()
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
